@@ -19,17 +19,8 @@
             android:id="@+id/test1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="+50.24%"
-            android:textColor="@color/priceGreen"
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/test2"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="-59.23%"
-
-            android:textColor="@color/priceRed"
+            android:text="test"
+            android:textColor="@color/textWhite"
             android:textSize="20sp" />
 
     </LinearLayout>

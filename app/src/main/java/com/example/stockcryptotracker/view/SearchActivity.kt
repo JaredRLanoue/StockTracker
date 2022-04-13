@@ -11,12 +11,9 @@ class SearchActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
 
-        val bottomNavigation = findViewById<BottomNavigationView>(R.id.bottom_navigation)
-
-
         title = "Search"
 
-
+        val bottomNavigation = findViewById<BottomNavigationView>(R.id.bottom_navigation)
         bottomNavigation.selectedItemId = R.id.ic_search
         bottomNavigation.setOnItemSelectedListener {
             when (it.itemId) {

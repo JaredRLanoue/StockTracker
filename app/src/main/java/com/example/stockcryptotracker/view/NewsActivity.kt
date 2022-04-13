@@ -13,11 +13,9 @@ class NewsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_news)
 
-        val bottomNavigation = findViewById<BottomNavigationView>(R.id.bottom_navigation)
-
         title = "News"
 
-
+        val bottomNavigation = findViewById<BottomNavigationView>(R.id.bottom_navigation)
         bottomNavigation.selectedItemId = R.id.ic_news
         bottomNavigation.setOnItemSelectedListener {
             when (it.itemId) {
