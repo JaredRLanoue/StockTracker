@@ -11,15 +11,33 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingLeft="15dp"
-        android:paddingTop="15dp">
+        android:orientation="vertical">
+
+<!--        android:paddingLeft="15dp"-->
+<!--        android:paddingTop="15dp">-->
 
         <TextView
             android:id="@+id/test1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="test"
+            android:gravity="center"
+            android:text="US Markets"
+            android:textColor="@color/textWhite"
+            android:textSize="20sp" />
+        <TextView
+            android:id="@+id/test2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="Watchlist"
+            android:textColor="@color/textWhite"
+            android:textSize="20sp" />
+        <TextView
+            android:id="@+id/test3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="Trending"
             android:textColor="@color/textWhite"
             android:textSize="20sp" />
 
@@ -41,6 +59,5 @@
         app:itemIconTint="@color/selector"
         app:itemTextColor="@color/selector"
         app:menu="@menu/nav_menu" />
-
 
 </RelativeLayout>

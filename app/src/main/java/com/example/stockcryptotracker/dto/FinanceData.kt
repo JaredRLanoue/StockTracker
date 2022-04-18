@@ -1,5 +1,6 @@
 package com.example.stockcryptotracker.dto
 
+import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 data class FinanceData(
@@ -11,6 +12,7 @@ data class FinanceData2(
 )
 
 data class FinanceData3(
-    val longName: String,
-    val regularMarketPrice: Float
+    val shortName: String,
+    val regularMarketPrice: Float,
+    val regularMarketChangePercent: Float
 )

@@ -13,6 +13,7 @@ class SearchActivity : AppCompatActivity() {
 
         title = "Search"
 
+
         val bottomNavigation = findViewById<BottomNavigationView>(R.id.bottom_navigation)
         bottomNavigation.selectedItemId = R.id.ic_search
         bottomNavigation.setOnItemSelectedListener {
