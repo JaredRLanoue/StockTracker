@@ -1,8 +1,5 @@
 package com.example.stockcryptotracker.dto
 
-import com.google.gson.annotations.SerializedName
-import java.io.Serializable
-
 data class FinanceData(
     val quoteResponse: FinanceData2
 )
@@ -14,5 +11,6 @@ data class FinanceData2(
 data class FinanceData3(
     val shortName: String,
     val regularMarketPrice: Float,
-    val regularMarketChangePercent: Float
+    val regularMarketChangePercent: Float,
+    val symbol: String? = "-" // Work on setting default value similar to this, doesn't work because of GSON?
 )

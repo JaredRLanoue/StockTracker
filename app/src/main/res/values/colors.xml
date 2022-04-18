@@ -10,4 +10,6 @@
     <color name="roundedTV">#303030</color>
     <color name="priceRed">#fc0000</color>
     <color name="priceGreen">#00d964</color>
+    <color name="grey">#303030</color>
+    <color name="cardColor">#1c1c1e</color>
 </resources>

@@ -3,8 +3,12 @@ package com.example.stockcryptotracker.view
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import com.example.stockcryptotracker.R
+import com.example.stockcryptotracker.dto.FinanceData3
 import com.example.stockcryptotracker.service.YahooFinanceService
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.text.SimpleDateFormat
@@ -23,8 +27,10 @@ class HomeActivity : AppCompatActivity() {
         supportActionBar?.title = "Home"
         supportActionBar?.subtitle = "$currentMonth $currentDay"
 
-        //val finance = YahooFinanceService().getStockData()
-        val finance2 = YahooFinanceService().getTrendingData()
+        val usMarkets = YahooFinanceService().getStockData("NDAQ,^DJI,^GSPC")
+        //val finance2 = YahooFinanceService().getTrendingData()
+
+
 
         // Bottom navigation bar
         val bottomNavigation = findViewById<BottomNavigationView>(R.id.bottom_navigation)
