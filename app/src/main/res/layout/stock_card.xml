@@ -2,25 +2,31 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="150dp"
     android:layout_height="150dp"
+    android:layout_margin="10dp"
     app:cardBackgroundColor="@color/cardColor"
     app:cardCornerRadius="15dp"
-    android:id="@+id/theme_cardview">
+    android:id="@+id/stock_card">
 
     <!--    app:cardElevation="10dp"-->
 
     <LinearLayout
+        android:id="@+id/stock_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center"
-        android:layout_margin="10dp">
+        android:layout_margin="10dp"
+        android:weightSum="3">
 
         <TextView
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:text="AAPL"
+            android:maxLength="15"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:text="SYMBOL"
             android:textColor="@color/textWhite"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -29,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:text="108.69"
+            android:text="11.11"
             android:textColor="@color/white"
             android:textSize="14sp"
             android:textAlignment="center"/>
@@ -37,7 +43,7 @@
             android:id="@+id/percentChange"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="+10.67"
+            android:text="+11.11"
             android:textColor="@color/priceGreen"
             android:textSize="14sp"
             android:textAlignment="center"/>

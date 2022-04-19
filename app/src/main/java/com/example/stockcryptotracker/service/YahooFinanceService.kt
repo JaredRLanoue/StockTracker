@@ -1,10 +1,8 @@
 package com.example.stockcryptotracker.service
 
 import android.util.Log
-import android.widget.TextView
 import com.example.stockcryptotracker.dto.*
 import com.example.stockcryptotracker.network.RetrofitAPIFactory
-import org.w3c.dom.Text
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -13,50 +11,66 @@ class YahooFinanceService {
 
     private val api = RetrofitAPIFactory().getYahooFinanceAPI()
 
-    fun getStockData(symbols: String) {
+    fun getStockData(symbols: String, successCallback: (FinanceData) -> Unit, failureCallback: (errorMessage: String) -> Unit) {
         api.getStockDetails(symbols).enqueue(object : Callback<FinanceData> {
             override fun onResponse(call: Call<FinanceData>, response: Response<FinanceData>) {
-                //Log.d("asdf", response.body()!!.toString())
-                showData(response.body()!!.quoteResponse.result)
+                if (response.isSuccessful) {
+                    response.body()?.let {
+                        successCallback(it)
+                    } ?: run {
+                        failureCallback("No jokes returned from service")
+                    }
+                } else {
+                    failureCallback("Error getting jokes")
+                }
             }
+                //showData(response.body()!!.quoteResponse.result)
 
             override fun onFailure(call: Call<FinanceData>, t: Throwable) {
-                Log.d("asdf", t.toString())
+                failureCallback("Error: ${t.message}")
             }
         })
     }
 
-    fun getTrendingData() {
-        api.getTrendingDetails().enqueue(object : Callback<TrendingData> {
-            override fun onResponse(call: Call<TrendingData>, response: Response<TrendingData>) {
-                val top10TrendingSymbols = response.body()!!.finance.result[0]
-                trendingDataToString(top10TrendingSymbols)
-            }
 
-            override fun onFailure(call: Call<TrendingData>, t: Throwable) {
-                Log.d("asdf", t.toString())
-            }
-        })
-    }
+
+
+
+
+//    fun getTrendingData() {
+//        api.getTrendingDetails().enqueue(object : Callback<TrendingData> {
+//            override fun onResponse(call: Call<TrendingData>, response: Response<TrendingData>) {
+//                val top10TrendingSymbols = response.body()!!.finance.result[0]
+//                trendingDataToString(top10TrendingSymbols)
+//            }
+//
+//            override fun onFailure(call: Call<TrendingData>, t: Throwable) {
+//                Log.d("asdf", t.toString())
+//            }
+//        })
+//    }
 }
+
+
+
+
     // Testing functions to see output, should close the above class here and not include the following functions
-    fun trendingDataToString(data: TrendingData3) {
-        val listOfTrendingSymbols: MutableList<String> = mutableListOf()
-        for (i in 0..9) {
-            listOfTrendingSymbols += data.quotes[i].symbol
-        }
-
-        val trendingSymbolsNoSpaces = listOfTrendingSymbols.joinToString()
-            .filter { !it.isWhitespace() }
-        YahooFinanceService().getStockData(trendingSymbolsNoSpaces)
-    }
-
-    fun showData(data: List<FinanceData3>) {
-        for (element in data) {
-            Log.d("asdf", element.toString())
-        }
-
-    }
+//    fun trendingDataToString(data: TrendingData3) {
+//        val listOfTrendingSymbols: MutableList<String> = mutableListOf()
+//        for (i in 0..9) {
+//            listOfTrendingSymbols += data.quotes[i].symbol
+//        }
+//
+//        val trendingSymbolsNoSpaces = listOfTrendingSymbols.joinToString()
+//            .filter { !it.isWhitespace() }
+//        YahooFinanceService().getStockData(trendingSymbolsNoSpaces)
+//    }
+//
+//    fun showData(data: List<FinanceData3>) {
+//        for (element in data) {
+//            Log.d("asdf", element.toString())
+//        }
+//    }
 
 
             // Figure out homeview/homepresenter.

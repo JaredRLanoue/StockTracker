@@ -1,24 +1,38 @@
 package com.example.stockcryptotracker.view
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.widget.TextView
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.cardview.widget.CardView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.stockcryptotracker.R
-import com.example.stockcryptotracker.dto.FinanceData3
-import com.example.stockcryptotracker.service.YahooFinanceService
+import com.example.stockcryptotracker.dto.FinanceData
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.snackbar.Snackbar
 import java.text.SimpleDateFormat
 import java.util.*
 
-class HomeActivity : AppCompatActivity() {
+
+class HomeActivity : AppCompatActivity(), HomeView {
+
+    val presenter = HomePresenter(this)
+    lateinit var rvUSMarkets: RecyclerView
+    lateinit var homeContainer: View
+
+
     @SuppressLint("SimpleDateFormat")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+
+        bindViews()
+        presenter.start()
+
+
+
 
         // Title named home and subtitle with date, put computing data into presenter and the setting of titlebar into view. Call it from this activity.
         val calender = Calendar.getInstance()
@@ -27,11 +41,8 @@ class HomeActivity : AppCompatActivity() {
         supportActionBar?.title = "Home"
         supportActionBar?.subtitle = "$currentMonth $currentDay"
 
-        val usMarkets = YahooFinanceService().getStockData("NDAQ,^DJI,^GSPC")
+        //val usMarkets = YahooFinanceService().getStockData("^IXIC,^DJI,^GSPC")
         //val finance2 = YahooFinanceService().getTrendingData()
-
-
-
         // Bottom navigation bar
         val bottomNavigation = findViewById<BottomNavigationView>(R.id.bottom_navigation)
         bottomNavigation.selectedItemId = R.id.ic_home
@@ -43,5 +54,23 @@ class HomeActivity : AppCompatActivity() {
             }
             true
         }
+
+
     }
+
+    override fun showError(errorMessage: String) {
+        Snackbar.make(homeContainer, errorMessage, Snackbar.LENGTH_LONG).show()
+    }
+
+    override fun bindUSMarket(data: FinanceData) {
+        rvUSMarkets.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        rvUSMarkets.adapter = USMarketAdapter(data)
+    }
+
+    private fun bindViews() {
+        homeContainer = findViewById(R.id.home_container)
+        rvUSMarkets = findViewById(R.id.rvUSMarkets)
+    }
+
+
 }
