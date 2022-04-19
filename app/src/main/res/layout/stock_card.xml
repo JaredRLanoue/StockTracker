@@ -5,9 +5,8 @@
     android:layout_margin="10dp"
     app:cardBackgroundColor="@color/cardColor"
     app:cardCornerRadius="15dp"
-    android:id="@+id/stock_card">
-
-    <!--    app:cardElevation="10dp"-->
+    android:id="@+id/stock_card"
+    app:cardElevation="10dp">
 
     <LinearLayout
         android:id="@+id/stock_layout"
@@ -23,9 +22,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:maxLength="15"
-            android:maxLines="1"
+            android:maxLength="20"
+            android:maxLines="2"
             android:ellipsize="end"
+            android:gravity="center"
             android:text="SYMBOL"
             android:textColor="@color/textWhite"
             android:textSize="18sp"
