@@ -1,7 +1,6 @@
-package com.example.stockcryptotracker.view
+package com.example.stockcryptotracker.view.home
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -10,6 +9,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.stockcryptotracker.R
 import com.example.stockcryptotracker.dto.FinanceData
+import com.example.stockcryptotracker.view.details.DetailsActivity
+import com.example.stockcryptotracker.view.news.NewsActivity
+import com.example.stockcryptotracker.view.search.SearchActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import java.text.SimpleDateFormat
@@ -20,6 +22,7 @@ class HomeActivity : AppCompatActivity(), HomeView {
 
     val presenter = HomePresenter(this)
     lateinit var rvUSMarkets: RecyclerView
+    lateinit var rvTrending: RecyclerView
     lateinit var homeContainer: View
 
 
@@ -32,8 +35,6 @@ class HomeActivity : AppCompatActivity(), HomeView {
         presenter.start()
 
 
-
-
         // Title named home and subtitle with date, put computing data into presenter and the setting of titlebar into view. Call it from this activity.
         val calender = Calendar.getInstance()
         val currentMonth = SimpleDateFormat("MMMM").format(calender.time)
@@ -41,10 +42,8 @@ class HomeActivity : AppCompatActivity(), HomeView {
         supportActionBar?.title = "Home"
         supportActionBar?.subtitle = "$currentMonth $currentDay"
 
-        //val usMarkets = YahooFinanceService().getStockData("^IXIC,^DJI,^GSPC")
-        //val finance2 = YahooFinanceService().getTrendingData()
         // Bottom navigation bar
-        val bottomNavigation = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+        val bottomNavigation: BottomNavigationView = findViewById(R.id.bottom_navigation)
         bottomNavigation.selectedItemId = R.id.ic_home
         bottomNavigation.setOnItemSelectedListener {
             when (it.itemId) {
@@ -54,23 +53,28 @@ class HomeActivity : AppCompatActivity(), HomeView {
             }
             true
         }
-
-
     }
+
+
+
 
     override fun showError(errorMessage: String) {
         Snackbar.make(homeContainer, errorMessage, Snackbar.LENGTH_LONG).show()
     }
 
-    override fun bindUSMarket(data: FinanceData) {
+    override fun bindMarketSummary(data: FinanceData) {
         rvUSMarkets.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        rvUSMarkets.adapter = USMarketAdapter(data)
+        rvUSMarkets.adapter = MarketSummaryAdapter(data)
     }
 
     private fun bindViews() {
         homeContainer = findViewById(R.id.home_container)
         rvUSMarkets = findViewById(R.id.rvUSMarkets)
+        rvTrending = findViewById(R.id.rvTrending)
     }
 
-
+    override fun bindTrending(data: FinanceData) {
+        rvTrending.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        rvTrending.adapter = TrendingAdapter(data)
+    }
 }

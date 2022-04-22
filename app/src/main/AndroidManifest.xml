@@ -11,22 +11,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.StockCryptoTracker">
-        <service
-            android:name=".network.MyService"
-            android:enabled="true"
-            android:exported="true"></service>
 
         <activity
-            android:name=".view.DetailsActivity"
+            android:name=".view.details.DetailsActivity"
             android:exported="false" />
         <activity
-            android:name=".view.NewsActivity"
+            android:name=".view.news.NewsActivity"
             android:exported="false" />
         <activity
-            android:name=".view.SearchActivity"
+            android:name=".view.search.SearchActivity"
             android:exported="false" />
         <activity
-            android:name=".view.HomeActivity"
+            android:name=".view.home.HomeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

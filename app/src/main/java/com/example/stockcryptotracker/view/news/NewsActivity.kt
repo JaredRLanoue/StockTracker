@@ -1,21 +1,24 @@
-package com.example.stockcryptotracker.view
+package com.example.stockcryptotracker.view.news
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.example.stockcryptotracker.R
+import com.example.stockcryptotracker.view.home.HomeActivity
+import com.example.stockcryptotracker.view.search.SearchActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class SearchActivity : AppCompatActivity() {
+
+class NewsActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_search)
+        setContentView(R.layout.activity_news)
 
-        title = "Search"
+        title = "News"
 
-
-        val bottomNavigation = findViewById<BottomNavigationView>(R.id.bottom_navigation)
-        bottomNavigation.selectedItemId = R.id.ic_search
+        val bottomNavigation: BottomNavigationView = findViewById(R.id.bottom_navigation)
+        bottomNavigation.selectedItemId = R.id.ic_news
         bottomNavigation.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.ic_home -> startActivity(Intent(this, HomeActivity::class.java))

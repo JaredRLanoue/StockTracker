@@ -1,17 +1,76 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".view.HomeActivity"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/background"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".view.home.HomeActivity">
 
-    <FrameLayout
-        android:id="@+id/flWrapper"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/bottom_navigation"/>
+        android:layout_height="wrap_content"
+        android:background="@color/background"
+        android:scrollbarThumbVertical="@color/grey">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/activity_margin"
+                android:text="Name"
+                android:textColor="@color/textWhite"
+                android:textSize="40sp" />
+
+<!--            <TextView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_marginBottom="@dimen/activity_margin"-->
+<!--                android:layout_marginLeft="@dimen/activity_margin"-->
+<!--                android:text="Symbol"-->
+<!--                android:textColor="@color/textWhite"-->
+<!--                android:textSize="20sp" />-->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="@dimen/activity_margin"
+                android:weightSum="2">
+
+                <TextView
+                    android:id="@+id/stock_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="111.11"
+                    android:textColor="@color/textWhite"
+                    android:textSize="35sp" />
+
+                <TextView
+                    android:id="@+id/stock_percent_change"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="10dp"
+                    android:text="+11.11%"
+                    android:textColor="@color/priceGreen"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/line_chart"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_margin="@dimen/activity_margin" />
+
+        </LinearLayout>
+
+
+    </ScrollView>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
@@ -23,6 +82,5 @@
         app:itemIconTint="@color/selector"
         app:itemTextColor="@color/selector"
         app:menu="@menu/nav_menu" />
-
 
 </RelativeLayout>

@@ -11,20 +11,23 @@ class YahooFinanceService {
 
     private val api = RetrofitAPIFactory().getYahooFinanceAPI()
 
-    fun getStockData(symbols: String, successCallback: (FinanceData) -> Unit, failureCallback: (errorMessage: String) -> Unit) {
+    fun getStockData(
+        symbols: String,
+        successCallback: (FinanceData) -> Unit,
+        failureCallback: (errorMessage: String) -> Unit
+    ) {
         api.getStockDetails(symbols).enqueue(object : Callback<FinanceData> {
             override fun onResponse(call: Call<FinanceData>, response: Response<FinanceData>) {
                 if (response.isSuccessful) {
                     response.body()?.let {
                         successCallback(it)
                     } ?: run {
-                        failureCallback("No jokes returned from service")
+                        failureCallback("Error getting market data, please try again!")
                     }
                 } else {
-                    failureCallback("Error getting jokes")
+                    failureCallback("Error getting response from server, please try again!")
                 }
             }
-                //showData(response.body()!!.quoteResponse.result)
 
             override fun onFailure(call: Call<FinanceData>, t: Throwable) {
                 failureCallback("Error: ${t.message}")
@@ -32,50 +35,52 @@ class YahooFinanceService {
         })
     }
 
+    fun getTrendingData(
+        successCallback: (TrendingData) -> Unit,
+        failureCallback: (errorMessage: String) -> Unit
+    ) {
+        api.getTrendingDetails().enqueue(object : Callback<TrendingData> {
+            override fun onResponse(call: Call<TrendingData>, response: Response<TrendingData>) {
+                if (response.isSuccessful) {
+                    response.body()?.let {
+                        successCallback(it)
+                    } ?: run {
+                        failureCallback("Error getting trending data, please try again!")
+                    }
+                } else {
+                    failureCallback("Error getting response from server, please try again!")
+                }
+            }
 
+            override fun onFailure(call: Call<TrendingData>, t: Throwable) {
+                failureCallback("Error: ${t.message}")
+            }
+        })
+    }
 
+    // Need to finish this
+    fun getChartData(
+        symbol: String,
+        successCallback: (ChartData) -> Unit,
+        failureCallback: (errorMessage: String) -> Unit
+    ) {
+        api.getChartDetails(symbol).enqueue(object : Callback<ChartData> {
+            override fun onResponse(call: Call<ChartData>, response: Response<ChartData>) {
+                if (response.isSuccessful) {
+                    response.body()?.let {
+                        successCallback(it)
+                    } ?: run {
+                        failureCallback("Error getting trending data, please try again!")
+                    }
+                } else {
+                    failureCallback("Error getting response from server, please try again!")
+                }
+            }
 
-
-
-//    fun getTrendingData() {
-//        api.getTrendingDetails().enqueue(object : Callback<TrendingData> {
-//            override fun onResponse(call: Call<TrendingData>, response: Response<TrendingData>) {
-//                val top10TrendingSymbols = response.body()!!.finance.result[0]
-//                trendingDataToString(top10TrendingSymbols)
-//            }
-//
-//            override fun onFailure(call: Call<TrendingData>, t: Throwable) {
-//                Log.d("asdf", t.toString())
-//            }
-//        })
-//    }
+            override fun onFailure(call: Call<ChartData>, t: Throwable) {
+                failureCallback("Error: ${t.message}")
+            }
+        })
+    }
 }
-
-
-
-
-    // Testing functions to see output, should close the above class here and not include the following functions
-//    fun trendingDataToString(data: TrendingData3) {
-//        val listOfTrendingSymbols: MutableList<String> = mutableListOf()
-//        for (i in 0..9) {
-//            listOfTrendingSymbols += data.quotes[i].symbol
-//        }
-//
-//        val trendingSymbolsNoSpaces = listOfTrendingSymbols.joinToString()
-//            .filter { !it.isWhitespace() }
-//        YahooFinanceService().getStockData(trendingSymbolsNoSpaces)
-//    }
-//
-//    fun showData(data: List<FinanceData3>) {
-//        for (element in data) {
-//            Log.d("asdf", element.toString())
-//        }
-//    }
-
-
-            // Figure out homeview/homepresenter.
-            // Pass through getStockDetails by using query to get name/percentage instead of just ticker?
-            // Literally just put a comma between the symbols, no special letters or characters.
-            // Create a comma seperated list of these symbols then pass them through the getStockDetails API, then create recyclerview from this data
-            // that is clickable to get to details page with the data already obtained.
 
