@@ -9,8 +9,8 @@ data class ChartData2(
 )
 
 data class ChartData3(
-    val timeStamp: List<Int>,
-    val indicators: List<ChartData4>
+    val timestamp: List<Int>,
+    val indicators: ChartData4
 )
 
 data class ChartData4(
@@ -18,5 +18,5 @@ data class ChartData4(
 )
 
 data class ChartData5(
-    val close: List<Int>
+    val close: List<Float>
 )

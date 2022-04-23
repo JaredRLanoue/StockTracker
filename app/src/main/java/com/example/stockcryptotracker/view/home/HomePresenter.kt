@@ -8,11 +8,11 @@ class HomePresenter(val view: HomeView) {
     val yahooService = YahooFinanceService()
 
     fun start() {
-        getUSMarketData()
-        getTrendingData()
+        getMarketSummaryData()
+        getMarketTrendingData()
     }
 
-    fun getUSMarketData() {
+    fun getMarketSummaryData() {
         yahooService.getStockData(
             "^IXIC,^DJI,^GSPC,RTY=F,CL=F,GC=F,SI=F",
             successCallback = { data ->
@@ -25,7 +25,7 @@ class HomePresenter(val view: HomeView) {
         )
     }
 
-    fun getTrendingData() {
+    fun getMarketTrendingData() {
         yahooService.getTrendingData(
             successCallback = { data ->
                 yahooService.getStockData(

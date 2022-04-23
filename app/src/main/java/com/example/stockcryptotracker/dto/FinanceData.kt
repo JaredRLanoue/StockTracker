@@ -13,7 +13,7 @@ data class FinanceData3(
     val regularMarketPrice: Float,
     val regularMarketChangePercent: Float,
     val fullExchangeName: String?,
-    val symbol: String? = "-", // Work on setting default value similar to this, doesn't work because of GSON?
+    val symbol: String? = "-",
     val fiftyTwoWeekHigh: Float,
     val fiftyTwoWeekLow: Float,
     val marketCap: Float

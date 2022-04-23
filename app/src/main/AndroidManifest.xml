@@ -16,10 +16,11 @@
             android:name=".view.details.DetailsActivity"
             android:exported="false" />
         <activity
-            android:name=".view.news.NewsActivity"
+            android:name=".view.favorites.WatchlistActivity"
             android:exported="false" />
         <activity
             android:name=".view.search.SearchActivity"
+            android:windowSoftInputMode="adjustPan"
             android:exported="false" />
         <activity
             android:name=".view.home.HomeActivity"

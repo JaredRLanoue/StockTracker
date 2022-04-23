@@ -10,24 +10,27 @@
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.17" />
         <entry key="app/src/main/res/drawable/ic_news.xml" value="0.281" />
         <entry key="app/src/main/res/drawable/ic_search.xml" value="0.281" />
+        <entry key="app/src/main/res/drawable/ic_watchlist.xml" value="0.2045" />
         <entry key="app/src/main/res/drawable/rounded_corner.xml" value="0.209" />
         <entry key="app/src/main/res/font/montserrat.xml" value="0.67" />
-        <entry key="app/src/main/res/layout/activity_details.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/activity_details.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2563323201621074" />
         <entry key="app/src/main/res/layout/activity_news.xml" value="0.2560790273556231" />
-        <entry key="app/src/main/res/layout/activity_search.xml" value="0.2560790273556231" />
+        <entry key="app/src/main/res/layout/activity_search.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_blank.xml" value="0.4796747967479675" />
         <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.18931159420289856" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.2560790273556231" />
         <entry key="app/src/main/res/layout/fragment_news.xml" value="0.2560790273556231" />
         <entry key="app/src/main/res/layout/fragment_search.xml" value="0.2560790273556231" />
         <entry key="app/src/main/res/layout/search_bar.xml" value="0.67" />
+        <entry key="app/src/main/res/layout/search_box.xml" value="0.1" />
         <entry key="app/src/main/res/layout/stock_card.xml" value="0.5" />
         <entry key="app/src/main/res/layout/stock_card_2.xml" value="0.5" />
         <entry key="app/src/main/res/layout/stock_card_cube.xml" value="0.45260416666666664" />
         <entry key="app/src/main/res/layout/stock_card_horizontal.xml" value="0.5270833333333333" />
-        <entry key="app/src/main/res/layout/stock_card_rectangle.xml" value="0.34479166666666666" />
+        <entry key="app/src/main/res/layout/stock_card_rectangle.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/stock_card_search.xml" value="0.25" />
         <entry key="app/src/main/res/layout/stock_card_vertical.xml" value="0.5270833333333333" />
         <entry key="app/src/main/res/layout/stock_cell.xml" value="0.4192708333333333" />
         <entry key="app/src/main/res/menu/menu.xml" value="0.5046153846153846" />

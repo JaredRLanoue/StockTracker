@@ -58,13 +58,11 @@ class YahooFinanceService {
         })
     }
 
-    // Need to finish this
     fun getChartData(
-        symbol: String,
         successCallback: (ChartData) -> Unit,
         failureCallback: (errorMessage: String) -> Unit
     ) {
-        api.getChartDetails(symbol).enqueue(object : Callback<ChartData> {
+        api.getChartDetails().enqueue(object : Callback<ChartData> {
             override fun onResponse(call: Call<ChartData>, response: Response<ChartData>) {
                 if (response.isSuccessful) {
                     response.body()?.let {
@@ -82,5 +80,30 @@ class YahooFinanceService {
             }
         })
     }
+
+    fun getSearchData(
+        parameter: String,
+        successCallback: (SearchData) -> Unit,
+        failureCallback: (errorMessage: String) -> Unit
+    ) {
+        api.getSearchDetails(parameter).enqueue(object : Callback<SearchData> {
+            override fun onResponse(call: Call<SearchData>, response: Response<SearchData>) {
+                if (response.isSuccessful) {
+                    response.body()?.let {
+                        successCallback(it)
+                    } ?: run {
+                        failureCallback("Error getting search data, please try again!")
+                    }
+                } else {
+                    failureCallback("Error getting response from server, please try again!")
+                }
+            }
+
+            override fun onFailure(call: Call<SearchData>, t: Throwable) {
+                failureCallback("Error: ${t.message}")
+            }
+        })
+    }
+
 }
 

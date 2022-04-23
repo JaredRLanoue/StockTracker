@@ -9,8 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.stockcryptotracker.R
 import com.example.stockcryptotracker.dto.FinanceData
-import com.example.stockcryptotracker.view.details.DetailsActivity
-import com.example.stockcryptotracker.view.news.NewsActivity
+import com.example.stockcryptotracker.view.favorites.WatchlistActivity
 import com.example.stockcryptotracker.view.search.SearchActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
@@ -34,8 +33,7 @@ class HomeActivity : AppCompatActivity(), HomeView {
         bindViews()
         presenter.start()
 
-
-        // Title named home and subtitle with date, put computing data into presenter and the setting of titlebar into view. Call it from this activity.
+        // need to move this somewhere else?
         val calender = Calendar.getInstance()
         val currentMonth = SimpleDateFormat("MMMM").format(calender.time)
         val currentDay = SimpleDateFormat("d").format(calender.time)
@@ -49,7 +47,7 @@ class HomeActivity : AppCompatActivity(), HomeView {
             when (it.itemId) {
                 R.id.ic_home -> startActivity(Intent(this, HomeActivity::class.java))
                 R.id.ic_search -> startActivity(Intent(this, SearchActivity::class.java))
-                R.id.ic_news -> startActivity(Intent(this, NewsActivity::class.java))
+                R.id.ic_watchlist -> startActivity(Intent(this, WatchlistActivity::class.java))
             }
             true
         }
@@ -77,4 +75,5 @@ class HomeActivity : AppCompatActivity(), HomeView {
         rvTrending.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         rvTrending.adapter = TrendingAdapter(data)
     }
+
 }

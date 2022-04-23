@@ -2,6 +2,7 @@ package com.example.stockcryptotracker.network
 
 import com.example.stockcryptotracker.dto.ChartData
 import com.example.stockcryptotracker.dto.FinanceData
+import com.example.stockcryptotracker.dto.SearchData
 import com.example.stockcryptotracker.dto.TrendingData
 import retrofit2.Call
 import retrofit2.http.GET
@@ -10,24 +11,23 @@ import retrofit2.http.Query
 
 interface YahooFinanceAPI {
 
-    @Headers("accept: application/json", "x-api-key: JnCqeBCPiQ1MYSdh1ac5K2OXQAefqKAJ21grOZsd")
+    @Headers("accept: application/json", "x-api-key: y1v2pG1WQ15gSlMi6RCVY5AVDTB77nBv7XQWeDXs")
     @GET("v6/finance/quote?region=US&lang=en&")
     fun getStockDetails(@Query("symbols")symbols: String): Call<FinanceData>
 
-    @Headers("accept: application/json", "x-api-key: JnCqeBCPiQ1MYSdh1ac5K2OXQAefqKAJ21grOZsd")
-    @GET("v6/finance/quote/marketSummary?lang=en&region=US")
-    fun getMarketSummary(): Call<FinanceData>
-
-    @Headers("accept: application/json", "x-api-key: JnCqeBCPiQ1MYSdh1ac5K2OXQAefqKAJ21grOZsd")
+    @Headers("accept: application/json", "x-api-key: y1v2pG1WQ15gSlMi6RCVY5AVDTB77nBv7XQWeDXs")
     @GET("v1/finance/trending/US")
     fun getTrendingDetails(): Call<TrendingData>
 
-    @Headers("accept: application/json", "x-api-key: JnCqeBCPiQ1MYSdh1ac5K2OXQAefqKAJ21grOZsd")
-    @GET("v8/finance/chart/")
-    fun getChartDetails(@Query("")symbol: String): Call<ChartData>
+    @Headers("accept: application/json", "x-api-key: y1v2pG1WQ15gSlMi6RCVY5AVDTB77nBv7XQWeDXs")
+    @GET("v8/finance/chart/AAPL")
+    fun getChartDetails(): Call<ChartData>
+
+    @Headers("accept: application/json", "x-api-key: y1v2pG1WQ15gSlMi6RCVY5AVDTB77nBv7XQWeDXs")
+    @GET("v6/finance/autocomplete?region=US&lang=en&")
+    fun getSearchDetails(@Query("query")symbol: String): Call<SearchData>
 
 }
-
 
 // first api key: 7QJ92b1BU15ve09x4GBux1dncqQOrswA6vxnRn1y
 // second api key: JnCqeBCPiQ1MYSdh1ac5K2OXQAefqKAJ21grOZsd

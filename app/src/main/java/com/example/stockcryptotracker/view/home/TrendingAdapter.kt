@@ -1,5 +1,6 @@
 package com.example.stockcryptotracker.view.home
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
 import android.util.Log
@@ -24,6 +25,7 @@ class TrendingAdapter(private val data: FinanceData) :
         )
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.tvName.text = data.quoteResponse.result[position].shortName
         holder.tvPrice.text = String.format("%.2f", data.quoteResponse.result[position].regularMarketPrice)
