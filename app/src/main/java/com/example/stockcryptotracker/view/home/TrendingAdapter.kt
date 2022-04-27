@@ -27,13 +27,16 @@ class TrendingAdapter(private val data: FinanceData) :
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.tvName.text = data.quoteResponse.result[position].shortName
-        holder.tvPrice.text = String.format("%.2f", data.quoteResponse.result[position].regularMarketPrice)
+        val stock = data.quoteResponse.result[position]
 
+        holder.tvName.text = stock.shortName
+        holder.tvPrice.text = String.format("%.2f", stock.regularMarketPrice)
+
+        // need to check if smaller than .00, then just leave it as is. small crypto prices dont work when rounded like this
         val roundedPercentChange =
-            String.format("%.2f", data.quoteResponse.result[position].regularMarketChangePercent)
+            String.format("%.2f", stock.regularMarketChangePercent)
 
-        if (data.quoteResponse.result[position].regularMarketChangePercent >= 0) {
+        if (stock.regularMarketChangePercent >= 0) {
             holder.tvPercentChange.setTextColor(Color.parseColor("#00D964"))
             holder.tvPercentChange.text = "+$roundedPercentChange%"
         } else {
@@ -44,6 +47,7 @@ class TrendingAdapter(private val data: FinanceData) :
         holder.card.setOnClickListener {
             val context = holder.card.context
             val intent = Intent(context, DetailsActivity::class.java)
+            intent.putExtra("id", stock.symbol.toString());
             context.startActivity(intent)
         }
     }

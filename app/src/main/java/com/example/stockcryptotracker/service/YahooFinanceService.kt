@@ -9,7 +9,7 @@ import retrofit2.Response
 
 class YahooFinanceService {
 
-    private val api = RetrofitAPIFactory().getYahooFinanceAPI()
+    val api = RetrofitAPIFactory().getYahooFinanceAPI()
 
     fun getStockData(
         symbols: String,
@@ -104,6 +104,5 @@ class YahooFinanceService {
             }
         })
     }
-
 }
 

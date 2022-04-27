@@ -26,15 +26,20 @@ class MarketSummaryAdapter(private val data: FinanceData) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        // probably shouldn't have all this inside of here?
-        holder.tvName.text = data.quoteResponse.result[position].shortName
-        holder.tvPrice.text =
-            String.format("%.2f", data.quoteResponse.result[position].regularMarketPrice)
+        val stock = data.quoteResponse.result[position]
+
+        holder.tvName.text = stock.shortName
+
+        if (stock.regularMarketPrice > 0.01) { // altcoins on the weekends are lower than 0.01, need to show their prices.
+            holder.tvPrice.text = stock.regularMarketPrice.toString()
+        } else {
+            holder.tvPrice.text = String.format("%.2f", stock.regularMarketPrice)
+        }
 
         val roundedPercentChange =
-            String.format("%.2f", data.quoteResponse.result[position].regularMarketChangePercent)
+            String.format("%.2f", stock.regularMarketChangePercent)
 
-        if (data.quoteResponse.result[position].regularMarketChangePercent >= 0) {
+        if (stock.regularMarketChangePercent >= 0) {
             holder.tvPercentChange.setTextColor(Color.parseColor("#00D964"))
             holder.tvPercentChange.text = "+$roundedPercentChange%"
         } else {
@@ -45,6 +50,7 @@ class MarketSummaryAdapter(private val data: FinanceData) :
         holder.tvCard.setOnClickListener {
             val context = holder.tvCard.context
             val intent = Intent(context, DetailsActivity::class.java)
+            intent.putExtra("id", stock.symbol.toString());
             context.startActivity(intent)
         }
     }

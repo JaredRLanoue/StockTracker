@@ -26,11 +26,14 @@ class SearchAdapter(private val data: SearchData) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.tvName.text = data.ResultSet.Result[position].name
-        holder.tvSymbol.text = data.ResultSet.Result[position].symbol
+        val stock = data.ResultSet.Result[position]
+
+        holder.tvName.text = stock.name
+        holder.tvSymbol.text = stock.symbol
         holder.card.setOnClickListener {
             val context = holder.card.context
             val intent = Intent(context, DetailsActivity::class.java)
+            intent.putExtra("id", stock.symbol.toString())
             context.startActivity(intent)
         }
     }

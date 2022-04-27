@@ -8,6 +8,6 @@
     <string name="market_summary_title">Market Summary</string>
     <string name="trending_title">Trending</string>
     <string name="watchlist_title">Watchlist</string>
-    <string name="search_bar_hint">Search...</string>
+    <string name="search_bar_hint">Search for a stock...</string>
     <string name="enter_button_text">Enter</string>
 </resources>

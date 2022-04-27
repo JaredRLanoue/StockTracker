@@ -40,6 +40,7 @@ class SearchActivity : AppCompatActivity(), SearchView {
 
         title = "Search"
 
+        // Bottom navigation bar, need to move still
         val bottomNavigation: BottomNavigationView = findViewById(R.id.bottom_navigation)
         bottomNavigation.selectedItemId = R.id.ic_search
         bottomNavigation.setOnItemSelectedListener {

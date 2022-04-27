@@ -1,21 +1,30 @@
 package com.example.stockcryptotracker.view.details
 
-import com.example.stockcryptotracker.dto.TrendingData
+import android.content.Context
+import android.content.SharedPreferences
 import com.example.stockcryptotracker.service.YahooFinanceService
-import com.example.stockcryptotracker.view.home.HomeView
 
 
 class DetailsPresenter(val view: DetailsView) {
     val yahooService = YahooFinanceService()
 
-    fun start() {
-        getStockData()
+    fun start(id: String) {
+        getStockData(id)
         getChartData()
     }
 
-    fun getStockData() {
+    fun getSharedPref(context: Context, id: String): SharedPreferences? {
+        return context.getSharedPreferences("id", Context.MODE_PRIVATE)
+    }
+
+    fun getSharedPrefFavoritesSet(prefs: SharedPreferences?): MutableList<String> {
+        val favoriteSet: Set<String> = prefs!!.getStringSet("id", HashSet()) as Set<String>
+        return favoriteSet.toMutableList()
+    }
+
+    fun getStockData(id: String) {
         yahooService.getStockData(
-            "",
+            id,
             successCallback = { data ->
                 view.bindStockData(data)
             },

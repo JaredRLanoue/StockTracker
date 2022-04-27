@@ -33,14 +33,14 @@ class HomeActivity : AppCompatActivity(), HomeView {
         bindViews()
         presenter.start()
 
-        // need to move this somewhere else?
+        // Need to move this somewhere else?
         val calender = Calendar.getInstance()
         val currentMonth = SimpleDateFormat("MMMM").format(calender.time)
         val currentDay = SimpleDateFormat("d").format(calender.time)
         supportActionBar?.title = "Home"
         supportActionBar?.subtitle = "$currentMonth $currentDay"
 
-        // Bottom navigation bar
+        // Bottom navigation bar, need to move still
         val bottomNavigation: BottomNavigationView = findViewById(R.id.bottom_navigation)
         bottomNavigation.selectedItemId = R.id.ic_home
         bottomNavigation.setOnItemSelectedListener {
@@ -52,8 +52,6 @@ class HomeActivity : AppCompatActivity(), HomeView {
             true
         }
     }
-
-
 
 
     override fun showError(errorMessage: String) {

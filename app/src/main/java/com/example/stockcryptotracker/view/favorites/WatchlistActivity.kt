@@ -1,7 +1,9 @@
 package com.example.stockcryptotracker.view.favorites
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.stockcryptotracker.R
 import com.example.stockcryptotracker.view.home.HomeActivity
@@ -15,8 +17,13 @@ class WatchlistActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_news)
 
+        val prefs = getSharedPreferences("id", Context.MODE_PRIVATE) // Use presenter to grab shared preferences
+        val fetch: Set<String> = prefs.getStringSet("id", HashSet()) as Set<String>
+        Log.d("asdf", fetch.toString()) // Need to implement this still, currently only logs the watchlist. (Might change to favorites list instead)
+
         title = "Watchlist"
 
+        // Bottom navigation bar, need to move still
         val bottomNavigation: BottomNavigationView = findViewById(R.id.bottom_navigation)
         bottomNavigation.selectedItemId = R.id.ic_watchlist
         bottomNavigation.setOnItemSelectedListener {

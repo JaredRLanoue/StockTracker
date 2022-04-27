@@ -20,36 +20,56 @@
             android:orientation="vertical">
 
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:id="@+id/stock_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/activity_margin"
-                android:text="Name"
+                android:maxLines="2"
                 android:textColor="@color/textWhite"
-                android:textSize="40sp" />
+                android:textSize="25sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/activity_margin"
+                android:layout_marginEnd="@dimen/activity_margin"
                 android:orientation="horizontal"
-                android:layout_marginLeft="@dimen/activity_margin"
                 android:weightSum="2">
 
                 <TextView
                     android:id="@+id/stock_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="111.11"
                     android:textColor="@color/textWhite"
-                    android:textSize="35sp" />
+                    android:textSize="25sp" />
 
                 <TextView
                     android:id="@+id/stock_percent_change"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:paddingLeft="10dp"
-                    android:text="+11.11%"
+                    android:layout_marginStart="10dp"
                     android:textColor="@color/priceGreen"
-                    android:textSize="20sp" />
+                    android:textSize="15sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="right">
+
+                    <ToggleButton
+                        android:id="@+id/favoritesButton"
+                        android:layout_width="24dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@null"
+                        android:button="@drawable/selector_favorites"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:textOff=""
+                        android:textOn="" />
+
+                </LinearLayout>
+
             </LinearLayout>
 
             <com.github.mikephil.charting.charts.LineChart
@@ -70,8 +90,8 @@
         android:layout_alignParentBottom="true"
         android:background="?android:attr/windowBackground"
         app:itemBackground="@color/background"
-        app:itemIconTint="@color/selector"
-        app:itemTextColor="@color/selector"
+        app:itemIconTint="@color/nav_selector"
+        app:itemTextColor="@color/nav_selector"
         app:menu="@menu/nav_menu" />
 
 </RelativeLayout>

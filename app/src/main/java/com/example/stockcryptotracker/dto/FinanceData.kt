@@ -16,5 +16,6 @@ data class FinanceData3(
     val symbol: String? = "-",
     val fiftyTwoWeekHigh: Float,
     val fiftyTwoWeekLow: Float,
-    val marketCap: Float
+    val marketCap: Float,
+    val typeDisp: String?
 )

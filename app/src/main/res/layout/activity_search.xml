@@ -37,10 +37,7 @@
             android:layout_width="100dp"
             android:layout_height="55dp"
             android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/activity_margin"
-            android:layout_marginTop="@dimen/card_margin"
-            android:layout_marginRight="@dimen/activity_margin"
-            android:layout_marginBottom="@dimen/card_margin"
+            android:layout_margin="@dimen/activity_margin"
             android:backgroundTint="@color/cardColor"
             android:text="@string/enter_button_text"
             android:textColor="@color/priceGreen" />
@@ -62,8 +59,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:itemBackground="@color/background"
-        app:itemIconTint="@color/selector"
-        app:itemTextColor="@color/selector"
+        app:itemIconTint="@color/nav_selector"
+        app:itemTextColor="@color/nav_selector"
         app:menu="@menu/nav_menu" />
 
 </LinearLayout>
