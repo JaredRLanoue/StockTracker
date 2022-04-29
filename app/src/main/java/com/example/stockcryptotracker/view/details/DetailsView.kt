@@ -8,5 +8,4 @@ interface DetailsView {
     fun showError(errorMessage: String)
     fun bindChartData(data: ChartData)
     fun bindStockData(data: FinanceData)
-    fun setFavoritesButton()
 }

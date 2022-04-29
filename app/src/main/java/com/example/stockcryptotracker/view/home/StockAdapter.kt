@@ -3,7 +3,6 @@ package com.example.stockcryptotracker.view.home
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,12 +11,11 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.stockcryptotracker.R
 import com.example.stockcryptotracker.dto.FinanceData
-import com.example.stockcryptotracker.dto.TrendingData
 import com.example.stockcryptotracker.view.details.DetailsActivity
 
 
-class TrendingAdapter(private val data: FinanceData) :
-    RecyclerView.Adapter<TrendingAdapter.ViewHolder>() {
+class StockAdapter(private val data: FinanceData) :
+    RecyclerView.Adapter<StockAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -29,7 +27,12 @@ class TrendingAdapter(private val data: FinanceData) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val stock = data.quoteResponse.result[position]
 
-        holder.tvName.text = stock.shortName
+        if(stock.displayName != null) {
+            holder.tvName.text = stock.displayName
+        } else {
+            holder.tvName.text = stock.shortName
+        }
+
         holder.tvPrice.text = String.format("%.2f", stock.regularMarketPrice)
 
         // need to check if smaller than .00, then just leave it as is. small crypto prices dont work when rounded like this

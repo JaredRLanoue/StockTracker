@@ -1,32 +1,38 @@
 package com.example.stockcryptotracker.view.favorites
 
+import android.util.Log
 import com.example.stockcryptotracker.service.YahooFinanceService
 
 
 class WatchlistPresenter(val view: WatchlistView) {
     val yahooService = YahooFinanceService()
 
-    fun start(symbols: MutableSet<String>?) {
-        getWatchlistData(symbols)
+    fun start() {
+        getWatchlistData()
     }
 
-    fun getWatchlistData(symbols: MutableSet<String>?) {
-        yahooService.getStockData(
-            cleanData(symbols),
-            successCallback = { data ->
-                view.bindWatchlist(data)
-            },
+    fun getWatchlistData() {
+        val watchlist = yahooService.getWatchlistData().joinToString()
+            .filter { !it.isWhitespace() }
 
-            failureCallback = { errorMessage ->
-                view.showError(errorMessage)
-            }
-        )
+        if (watchlist.isNotEmpty()) {
+            yahooService.getStockData(
+                watchlist,
+                successCallback = { data ->
+                    view.bindWatchlist(data)
+                },
+                failureCallback = { errorMessage ->
+                    view.showError(errorMessage)
+                })
+        } else if (watchlist.isEmpty()) {
+            view.showEmptyWatchlistError()
+        }
     }
 
-    fun cleanData(data: MutableSet<String>?): String {
-        val trendingSymbolsNoSpaces = data?.joinToString()
-            ?.filter { !it.isWhitespace() }
-        return trendingSymbolsNoSpaces.toString()
-    }
+//    private fun cleanData(data: MutableList<String>): String {
+//        val trendingSymbolsNoSpaces = data.joinToString()
+//            .filter { !it.isWhitespace() }
+//        return trendingSymbolsNoSpaces.toString()
+//    }
 }
 

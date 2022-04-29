@@ -13,8 +13,7 @@ class HomePresenter(val view: HomeView) {
     }
 
     fun getMarketSummaryData() {
-        yahooService.getStockData(
-            "^IXIC,^DJI,^GSPC,RTY=F,CL=F,GC=F,SI=F",
+        yahooService.getMarketData(
             successCallback = { data ->
                 view.bindMarketSummary(data)
             },

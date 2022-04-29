@@ -12,10 +12,11 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.stockcryptotracker.R
 import com.example.stockcryptotracker.dto.FinanceData
+import com.example.stockcryptotracker.dto.MarketData
 import com.example.stockcryptotracker.view.details.DetailsActivity
 
 
-class MarketSummaryAdapter(private val data: FinanceData) :
+class MarketSummaryAdapter(private val data: MarketData) :
     RecyclerView.Adapter<MarketSummaryAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -26,20 +27,25 @@ class MarketSummaryAdapter(private val data: FinanceData) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        val stock = data.quoteResponse.result[position]
+        val stock = data.marketSummaryResponse.result[position]
 
-        holder.tvName.text = stock.shortName
-
-        if (stock.regularMarketPrice > 0.01) { // altcoins on the weekends are lower than 0.01, need to show their prices
-            holder.tvPrice.text = stock.regularMarketPrice.toString()
+        if (stock.shortName != null) { // BTC doesn't have shortName, so it's name will be the symbol instead - not sure how to remove highlighted warning
+            holder.tvName.text = stock.shortName
         } else {
-            holder.tvPrice.text = String.format("%.2f", stock.regularMarketPrice)
+            holder.tvName.text = stock.symbol
+        }
+
+
+        if (stock.regularMarketPrice.raw < 0.01) { // altcoins on the weekends are lower than 0.01, need to show their real prices
+            holder.tvPrice.text = stock.regularMarketPrice.raw.toString()
+        } else {
+            holder.tvPrice.text = String.format("%.2f", stock.regularMarketPrice.raw)
         }
 
         val roundedPercentChange =
-            String.format("%.2f", stock.regularMarketChangePercent)
+            String.format("%.2f", stock.regularMarketChangePercent.raw)
 
-        if (stock.regularMarketChangePercent >= 0) {
+        if (stock.regularMarketChangePercent.raw >= 0) {
             holder.tvPercentChange.setTextColor(Color.parseColor("#00D964"))
             holder.tvPercentChange.text = "+$roundedPercentChange%"
         } else {
@@ -56,7 +62,7 @@ class MarketSummaryAdapter(private val data: FinanceData) :
     }
 
     override fun getItemCount(): Int {
-        return data.quoteResponse.result.size
+        return data.marketSummaryResponse.result.size
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {

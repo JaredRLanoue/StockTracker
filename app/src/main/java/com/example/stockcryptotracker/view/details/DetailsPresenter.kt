@@ -10,9 +10,10 @@ class DetailsPresenter(val view: DetailsView) {
 
     fun start(id: String) {
         getStockData(id)
-        getChartData()
+        //getChartData()
     }
 
+    // remove once working
     fun getSharedPref(context: Context, id: String): SharedPreferences? {
         return context.getSharedPreferences("id", Context.MODE_PRIVATE)
     }

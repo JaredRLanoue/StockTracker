@@ -1,8 +1,10 @@
 package com.example.stockcryptotracker.service
 
+import android.content.Context
 import android.util.Log
 import com.example.stockcryptotracker.dto.*
 import com.example.stockcryptotracker.network.RetrofitAPIFactory
+import com.example.stockcryptotracker.view.favorites.StockApplication
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -104,5 +106,59 @@ class YahooFinanceService {
             }
         })
     }
+
+    fun getMarketData(
+        successCallback: (MarketData) -> Unit,
+        failureCallback: (errorMessage: String) -> Unit
+    ) {
+        api.getMarketSummaryDetails().enqueue(object : Callback<MarketData> {
+            override fun onResponse(call: Call<MarketData>, response: Response<MarketData>) {
+                if (response.isSuccessful) {
+                    response.body()?.let {
+                        successCallback(it)
+                    } ?: run {
+                        failureCallback("Error getting search data, please try again!")
+                    }
+                } else {
+                    failureCallback("Error getting response from server, please try again!")
+                }
+            }
+
+            override fun onFailure(call: Call<MarketData>, t: Throwable) {
+                failureCallback("Error: ${t.message}")
+            }
+        })
+    }
+
+    fun getWatchlistData(): MutableList<String> {
+        val prefs = StockApplication.appContext.getSharedPreferences("id", Context.MODE_PRIVATE)
+        val favoriteSet = prefs.getStringSet("id", null)?.toMutableList()
+        Log.d("asdf", favoriteSet.toString())
+        return favoriteSet as MutableList<String>
+    }
+
+    fun addToWatchlist(symbol: String){
+        val prefs = StockApplication.appContext.getSharedPreferences("id", Context.MODE_PRIVATE)
+        val favoriteSet = getWatchlistData()
+        favoriteSet.add(symbol)
+        with(prefs!!.edit()) {
+            putStringSet("id", favoriteSet.toMutableSet())
+            commit()
+        }
+
+    }
+
+    fun removeFromWatchlist(symbol: String){
+        val prefs = StockApplication.appContext.getSharedPreferences("id", Context.MODE_PRIVATE)
+        val favoriteSet = getWatchlistData()
+        favoriteSet.remove(symbol)
+        with(prefs!!.edit()) {
+            putStringSet("id", favoriteSet.toMutableSet())
+            commit()
+        }
+
+    }
 }
+
+
 

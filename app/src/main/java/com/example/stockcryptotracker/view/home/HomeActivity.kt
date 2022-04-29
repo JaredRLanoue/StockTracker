@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.stockcryptotracker.R
 import com.example.stockcryptotracker.dto.FinanceData
+import com.example.stockcryptotracker.dto.MarketData
 import com.example.stockcryptotracker.view.favorites.WatchlistActivity
 import com.example.stockcryptotracker.view.search.SearchActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -58,7 +59,7 @@ class HomeActivity : AppCompatActivity(), HomeView {
         Snackbar.make(homeContainer, errorMessage, Snackbar.LENGTH_LONG).show()
     }
 
-    override fun bindMarketSummary(data: FinanceData) {
+    override fun bindMarketSummary(data: MarketData) {
         rvUSMarkets.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         rvUSMarkets.adapter = MarketSummaryAdapter(data)
     }
@@ -71,7 +72,7 @@ class HomeActivity : AppCompatActivity(), HomeView {
 
     override fun bindTrending(data: FinanceData) {
         rvTrending.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        rvTrending.adapter = TrendingAdapter(data)
+        rvTrending.adapter = StockAdapter(data)
     }
 
 }

@@ -10,14 +10,15 @@ data class MarketData2(
 
 data class MarketData3(
     val shortName: String,
+    val symbol: String,
     val regularMarketChangePercent: MarketData4,
     val regularMarketPrice: MarketData5
 )
 
 data class MarketData4(
-    val fmt: Int
+    val raw: Float
 )
 
 data class MarketData5(
-    val fmt: Int
+    val raw: Float
 )

@@ -33,28 +33,29 @@ class DetailsActivity : AppCompatActivity(), DetailsView {
 
         bindViews()
 
-        // Still unsure if this is right, I grab the sharedpref using the presenter and use it below but is this other stuff fine since it's view logic?
-        // I also grabbed the shared preferences set using the presenter? Still sorta lost on the mvp structure concept
+        // not finished, dont put here. change to service/mvp layout
+        val symbolID = intent.getStringExtra("id")!!
 
-        val id = intent.getStringExtra("id")!!
-        val prefs = presenter.getSharedPref(applicationContext, id)
+        // these two shouldnt call presenter, instead call service
+        val prefs = presenter.getSharedPref(applicationContext, symbolID)
         val favoriteSet = presenter.getSharedPrefFavoritesSet(prefs)
 
-        presenter.start(id)
+        presenter.start(symbolID)
 
-        if (id in favoriteSet) {
-            setFavoritesButton()
+        // unsure how to do these
+        if (symbolID in favoriteSet) {
+            favoritesButton.isChecked = true
         }
 
         favoritesButton.setOnClickListener {
             if (favoritesButton.isChecked) {
-                favoriteSet.add(id)
+                favoriteSet.add(symbolID)
                 with(prefs!!.edit()) {
                     putStringSet("id", favoriteSet.toMutableSet())
                     commit()
                 }
             } else {
-                favoriteSet.remove(id)
+                favoriteSet.remove(symbolID)
                 with(prefs!!.edit()) {
                     putStringSet("id", favoriteSet.toMutableSet())
                     commit()
@@ -89,7 +90,7 @@ class DetailsActivity : AppCompatActivity(), DetailsView {
     override fun bindStockData(data: FinanceData) {
         val stock = data.quoteResponse.result[0]
         stockName.text = stock.shortName
-        stockPrice.text = stock.regularMarketPrice.toString()
+        stockPrice.text = String.format("%.2f", stock.regularMarketPrice)
 
         val roundedPercentChange =
             String.format("%.2f", stock.regularMarketChangePercent)
@@ -101,10 +102,6 @@ class DetailsActivity : AppCompatActivity(), DetailsView {
             stockPercentChange.setTextColor(Color.parseColor("#FC0000"))
             stockPercentChange.text = "$roundedPercentChange%"
         }
-    }
-
-    override fun setFavoritesButton() {
-        favoritesButton.isChecked = true
     }
 
     private fun bindViews() {
