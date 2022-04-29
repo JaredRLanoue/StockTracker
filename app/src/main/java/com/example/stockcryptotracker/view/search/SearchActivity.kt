@@ -30,7 +30,7 @@ class SearchActivity : AppCompatActivity(), SearchView {
 
         bindViews()
 
-        // not sure if this is right in terms of mvp?
+        // Not sure if this is right in terms of mvp?
         searchButton.setOnClickListener {
             val parameter = searchBar.text.toString()
             if(parameter.isNotEmpty()) {

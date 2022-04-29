@@ -30,7 +30,7 @@ class MarketSummaryAdapter(private val data: FinanceData) :
 
         holder.tvName.text = stock.shortName
 
-        if (stock.regularMarketPrice > 0.01) { // altcoins on the weekends are lower than 0.01, need to show their prices.
+        if (stock.regularMarketPrice > 0.01) { // altcoins on the weekends are lower than 0.01, need to show their prices
             holder.tvPrice.text = stock.regularMarketPrice.toString()
         } else {
             holder.tvPrice.text = String.format("%.2f", stock.regularMarketPrice)
