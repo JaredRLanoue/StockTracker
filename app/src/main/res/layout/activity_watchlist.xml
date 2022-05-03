@@ -18,19 +18,21 @@
         <TextView
             android:id="@+id/watchlistError"
             android:layout_width="wrap_content"
-            android:layout_height="200dp"
-            android:textSize="20sp"
-            android:gravity="center"
+            android:layout_height="wrap_content"
             android:layout_margin="@dimen/activity_margin"
+            android:gravity="center"
             android:text="@string/empty_hint"
             android:textColor="@color/textWhite"
-            android:visibility="invisible"/>
+            android:textSize="20sp"
+            android:visibility="invisible" />
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvWatchlist"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal" />
+
     </RelativeLayout>
 
     <FrameLayout

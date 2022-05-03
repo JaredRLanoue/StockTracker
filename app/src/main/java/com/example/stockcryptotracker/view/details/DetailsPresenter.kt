@@ -1,8 +1,13 @@
 package com.example.stockcryptotracker.view.details
 
+import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
 import com.example.stockcryptotracker.service.YahooFinanceService
+import com.example.stockcryptotracker.view.home.StockApplication
+import com.example.stockcryptotracker.view.home.StockApplication.Companion.appContext
+import com.github.mikephil.charting.data.ChartData
+import com.github.mikephil.charting.data.Entry
 
 
 class DetailsPresenter(val view: DetailsView) {
@@ -10,16 +15,17 @@ class DetailsPresenter(val view: DetailsView) {
 
     fun start(id: String) {
         getStockData(id)
-        //getChartData()
+        getChartData(id)
+        getStatsData(id)
     }
 
     // remove once working
-    fun getSharedPref(context: Context, id: String): SharedPreferences? {
-        return context.getSharedPreferences("id", Context.MODE_PRIVATE)
+    fun getSharedPref(): SharedPreferences? {
+        return appContext.getSharedPreferences("watchlist", Context.MODE_PRIVATE)
     }
 
-    fun getSharedPrefFavoritesSet(prefs: SharedPreferences?): MutableList<String> {
-        val favoriteSet: Set<String> = prefs!!.getStringSet("id", HashSet()) as Set<String>
+    fun getSharedPrefFavoritesSet(): MutableList<String> {
+        val favoriteSet: Set<String> = appContext.getSharedPreferences("watchlist", Context.MODE_PRIVATE).getStringSet("watchlist", HashSet()) as Set<String>
         return favoriteSet.toMutableList()
     }
 
@@ -36,10 +42,24 @@ class DetailsPresenter(val view: DetailsView) {
         )
     }
 
-    fun getChartData() {
+    fun getChartData(id: String) {
         yahooService.getChartData(
+            id,
             successCallback = { data ->
                 view.bindChartData(data)
+            },
+
+            failureCallback = { errorMessage ->
+                view.showError(errorMessage)
+            }
+        )
+    }
+
+    fun getStatsData(id: String) {
+        yahooService.getStatsData(
+            id,
+            successCallback = { data ->
+                view.bindStatsData(data)
             },
 
             failureCallback = { errorMessage ->

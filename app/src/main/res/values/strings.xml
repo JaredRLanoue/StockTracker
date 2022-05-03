@@ -10,5 +10,5 @@
     <string name="watchlist_title">Watchlist</string>
     <string name="search_bar_hint">Search for a stock...</string>
     <string name="enter_button_text">Enter</string>
-    <string name="empty_hint">Your watchlist is currently empty! To add to this watchlist, tap on a stock and then the heart!</string>
+    <string name="empty_hint">Your watchlist is currently empty!\n\nTo add to this watchlist, tap on a stock and then the heart to have the stocks show up here.</string>
 </resources>

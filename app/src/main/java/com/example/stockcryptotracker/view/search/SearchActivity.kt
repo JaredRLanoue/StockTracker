@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.stockcryptotracker.R
 import com.example.stockcryptotracker.dto.SearchData
 import com.example.stockcryptotracker.view.home.HomeActivity
-import com.example.stockcryptotracker.view.favorites.WatchlistActivity
+import com.example.stockcryptotracker.view.watchlist.WatchlistActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 

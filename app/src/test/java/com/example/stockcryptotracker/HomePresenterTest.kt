@@ -12,11 +12,11 @@ import org.junit.Assert.*
 class HomePresenterTest() {
     val view: HomeView = mockk(relaxed = true)
     val yahooService: YahooFinanceService = mockk(relaxed = true)
-    val presenter = HomePresenter(view)
+    var presenter = HomePresenter(view)
 
     @Test
     fun onStartCallGetMarketSummaryData() {
-        presenter.yahooService = yahooService
+//        presenter.yahooService = yahooService
 
         presenter.start()
 
@@ -25,7 +25,7 @@ class HomePresenterTest() {
 
     @Test
     fun onStartCallGetMarketTrendingData() {
-        presenter.yahooService = yahooService
+//        presenter.yahooService = yahooService
 
         presenter.start()
 

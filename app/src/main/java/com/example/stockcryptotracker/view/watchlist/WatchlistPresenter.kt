@@ -1,4 +1,4 @@
-package com.example.stockcryptotracker.view.favorites
+package com.example.stockcryptotracker.view.watchlist
 
 import android.util.Log
 import com.example.stockcryptotracker.service.YahooFinanceService
@@ -12,27 +12,22 @@ class WatchlistPresenter(val view: WatchlistView) {
     }
 
     fun getWatchlistData() {
-        val watchlist = yahooService.getWatchlistData().joinToString()
-            .filter { !it.isWhitespace() }
+        val watchlist = yahooService.getWatchlistData()
+        val watchlistString = watchlist.joinToString().filter { !it.isWhitespace() }
 
-        if (watchlist.isNotEmpty()) {
+        if (watchlistString.isNotEmpty()) {
             yahooService.getStockData(
-                watchlist,
+                watchlistString,
                 successCallback = { data ->
                     view.bindWatchlist(data)
                 },
                 failureCallback = { errorMessage ->
                     view.showError(errorMessage)
-                })
-        } else if (watchlist.isEmpty()) {
+                }
+            )
+        } else if (watchlistString.isEmpty()) {
             view.showEmptyWatchlistError()
         }
     }
-
-//    private fun cleanData(data: MutableList<String>): String {
-//        val trendingSymbolsNoSpaces = data.joinToString()
-//            .filter { !it.isWhitespace() }
-//        return trendingSymbolsNoSpaces.toString()
-//    }
 }
 

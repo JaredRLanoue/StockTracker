@@ -1,4 +1,4 @@
-package com.example.stockcryptotracker.view.favorites
+package com.example.stockcryptotracker.view.watchlist
 
 import android.content.Context
 import android.content.Intent
@@ -7,7 +7,6 @@ import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.stockcryptotracker.R
@@ -34,7 +33,6 @@ class WatchlistActivity : AppCompatActivity(), WatchlistView {
         presenter.start()
 
         title = "Watchlist"
-
 
         // Bottom navigation bar, need to move still
         val bottomNavigation: BottomNavigationView = findViewById(R.id.bottom_navigation)

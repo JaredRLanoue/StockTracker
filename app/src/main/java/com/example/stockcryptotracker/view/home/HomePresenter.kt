@@ -48,6 +48,7 @@ class HomePresenter(val view: HomeView) {
         for (i in 0..9) {
             listOfTrendingSymbols += data.finance.result[0].quotes[i].symbol
         }
+
         val trendingSymbolsNoSpaces = listOfTrendingSymbols.joinToString()
             .filter { !it.isWhitespace() }
         return trendingSymbolsNoSpaces

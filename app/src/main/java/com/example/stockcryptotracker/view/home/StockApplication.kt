@@ -1,4 +1,4 @@
-package com.example.stockcryptotracker.view.favorites
+package com.example.stockcryptotracker.view.home
 
 import android.app.Application
 import android.content.Context
@@ -6,7 +6,7 @@ import android.content.Context
 class StockApplication: Application() {
     override fun onCreate() {
         super.onCreate()
-        StockApplication.appContext = applicationContext
+        appContext = applicationContext
     }
     companion object {
         lateinit var appContext: Context

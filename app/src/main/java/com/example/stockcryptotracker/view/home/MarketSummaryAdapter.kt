@@ -29,14 +29,13 @@ class MarketSummaryAdapter(private val data: MarketData) :
 
         val stock = data.marketSummaryResponse.result[position]
 
-        if (stock.shortName != null) { // BTC doesn't have shortName, so it's name will be the symbol instead - not sure how to remove highlighted warning
+        if (stock.shortName != null) { // BTC doesn't have shortName, so it's name will be the symbol instead - not sure how to remove highlighted warning? It's needed or else textview is blank
             holder.tvName.text = stock.shortName
         } else {
             holder.tvName.text = stock.symbol
         }
 
-
-        if (stock.regularMarketPrice.raw < 0.01) { // altcoins on the weekends are lower than 0.01, need to show their real prices
+        if (stock.regularMarketPrice.raw < 0.01) { // Alt-coins on the weekends are lower than 0.01, need to show their real prices
             holder.tvPrice.text = stock.regularMarketPrice.raw.toString()
         } else {
             holder.tvPrice.text = String.format("%.2f", stock.regularMarketPrice.raw)

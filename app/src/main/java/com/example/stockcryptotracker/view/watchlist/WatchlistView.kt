@@ -1,4 +1,4 @@
-package com.example.stockcryptotracker.view.favorites
+package com.example.stockcryptotracker.view.watchlist
 
 import com.example.stockcryptotracker.dto.FinanceData
 

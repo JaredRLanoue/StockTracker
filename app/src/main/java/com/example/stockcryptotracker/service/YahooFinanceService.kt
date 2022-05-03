@@ -4,7 +4,7 @@ import android.content.Context
 import android.util.Log
 import com.example.stockcryptotracker.dto.*
 import com.example.stockcryptotracker.network.RetrofitAPIFactory
-import com.example.stockcryptotracker.view.favorites.StockApplication
+import com.example.stockcryptotracker.view.home.StockApplication
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -61,16 +61,17 @@ class YahooFinanceService {
     }
 
     fun getChartData(
+        symbol: String,
         successCallback: (ChartData) -> Unit,
         failureCallback: (errorMessage: String) -> Unit
     ) {
-        api.getChartDetails().enqueue(object : Callback<ChartData> {
+        api.getChartDetails(symbol).enqueue(object : Callback<ChartData> {
             override fun onResponse(call: Call<ChartData>, response: Response<ChartData>) {
                 if (response.isSuccessful) {
                     response.body()?.let {
                         successCallback(it)
                     } ?: run {
-                        failureCallback("Error getting trending data, please try again!")
+                        failureCallback("Error getting chart data, please try again!")
                     }
                 } else {
                     failureCallback("Error getting response from server, please try again!")
@@ -130,30 +131,55 @@ class YahooFinanceService {
         })
     }
 
+    fun getStatsData(
+        symbol: String,
+        successCallback: (StatsData) -> Unit,
+        failureCallback: (errorMessage: String) -> Unit
+    ) {
+        api.getStockStatsDetails(symbol).enqueue(object : Callback<StatsData> {
+            override fun onResponse(call: Call<StatsData>, response: Response<StatsData>) {
+                if (response.isSuccessful) {
+                    response.body()?.let {
+                        successCallback(it)
+                    } ?: run {
+                        failureCallback("Error getting stats data, please try again!")
+                    }
+                } else {
+                    failureCallback("Error getting response from server, please try again!")
+                }
+            }
+
+            override fun onFailure(call: Call<StatsData>, t: Throwable) {
+                failureCallback("Error: ${t.message}")
+            }
+        })
+    }
+
+
     fun getWatchlistData(): MutableList<String> {
-        val prefs = StockApplication.appContext.getSharedPreferences("id", Context.MODE_PRIVATE)
-        val favoriteSet = prefs.getStringSet("id", null)?.toMutableList()
+        val prefs = StockApplication.appContext.getSharedPreferences("watchlist", Context.MODE_PRIVATE)
+        val favoriteSet = prefs.getStringSet("watchlist", HashSet())!!.toMutableList()
         Log.d("asdf", favoriteSet.toString())
-        return favoriteSet as MutableList<String>
+        return favoriteSet.toMutableList()
     }
 
     fun addToWatchlist(symbol: String){
-        val prefs = StockApplication.appContext.getSharedPreferences("id", Context.MODE_PRIVATE)
+        val prefs = StockApplication.appContext.getSharedPreferences("watchlist", Context.MODE_PRIVATE)
         val favoriteSet = getWatchlistData()
         favoriteSet.add(symbol)
         with(prefs!!.edit()) {
-            putStringSet("id", favoriteSet.toMutableSet())
+            putStringSet("watchlist", favoriteSet.toMutableSet())
             commit()
         }
 
     }
 
     fun removeFromWatchlist(symbol: String){
-        val prefs = StockApplication.appContext.getSharedPreferences("id", Context.MODE_PRIVATE)
+        val prefs = StockApplication.appContext.getSharedPreferences("watchlist", Context.MODE_PRIVATE)
         val favoriteSet = getWatchlistData()
         favoriteSet.remove(symbol)
         with(prefs!!.edit()) {
-            putStringSet("id", favoriteSet.toMutableSet())
+            putStringSet("watchlist", favoriteSet.toMutableSet())
             commit()
         }
 
