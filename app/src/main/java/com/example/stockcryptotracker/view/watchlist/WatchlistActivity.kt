@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.stockcryptotracker.R
 import com.example.stockcryptotracker.dto.FinanceData
+import com.example.stockcryptotracker.service.YahooFinanceService
 import com.example.stockcryptotracker.view.home.HomeActivity
 import com.example.stockcryptotracker.view.home.StockAdapter
 import com.example.stockcryptotracker.view.search.SearchActivity
@@ -20,7 +21,7 @@ import com.google.android.material.snackbar.Snackbar
 
 class WatchlistActivity : AppCompatActivity(), WatchlistView {
 
-    val presenter = WatchlistPresenter(this)
+    val presenter = WatchlistPresenter(this, yahooService = YahooFinanceService())
     lateinit var rvWatchlist: RecyclerView
     lateinit var watchlistContainer: View
     lateinit var tvWatchlistError: TextView
@@ -30,11 +31,15 @@ class WatchlistActivity : AppCompatActivity(), WatchlistView {
         setContentView(R.layout.activity_watchlist)
 
         bindViews()
+        setUpNav()
         presenter.start()
 
         title = "Watchlist"
+    }
 
-        // Bottom navigation bar, need to move still
+    fun setUpNav(){
+        overridePendingTransition(androidx.transition.R.anim.abc_fade_in, androidx.transition.R.anim.abc_fade_out)
+
         val bottomNavigation: BottomNavigationView = findViewById(R.id.bottom_navigation)
         bottomNavigation.selectedItemId = R.id.ic_watchlist
         bottomNavigation.setOnItemSelectedListener {

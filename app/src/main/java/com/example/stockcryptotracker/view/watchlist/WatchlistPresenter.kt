@@ -1,11 +1,9 @@
 package com.example.stockcryptotracker.view.watchlist
 
-import android.util.Log
 import com.example.stockcryptotracker.service.YahooFinanceService
 
 
-class WatchlistPresenter(val view: WatchlistView) {
-    val yahooService = YahooFinanceService()
+class WatchlistPresenter(val view: WatchlistView, val yahooService: YahooFinanceService) {
 
     fun start() {
         getWatchlistData()

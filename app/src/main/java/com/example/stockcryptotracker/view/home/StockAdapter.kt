@@ -23,6 +23,7 @@ class StockAdapter(private val data: FinanceData) :
         )
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val stock = data.quoteResponse.result[position]
 
@@ -32,14 +33,12 @@ class StockAdapter(private val data: FinanceData) :
             holder.tvName.text = stock.shortName
         }
 
-        holder.tvPrice.text = String.format("%.2f", stock.regularMarketPrice)
         if(stock.regularMarketPrice >= 0.01) {
-            holder.tvPrice.text = String.format("%.2f", stock.regularMarketPrice)
+            holder.tvPrice.text = String.format("%,.2f", stock.regularMarketPrice)
         } else{
             holder.tvPrice.text = String.format("%.6f", stock.regularMarketPrice.toBigDecimal())
         }
 
-        // need to check if smaller than .00, then just leave it as is. small crypto prices dont work when rounded like this
         val roundedPercentChange =
             String.format("%.2f", stock.regularMarketChangePercent)
 

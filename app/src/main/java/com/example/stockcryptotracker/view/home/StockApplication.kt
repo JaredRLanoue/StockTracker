@@ -8,6 +8,7 @@ class StockApplication: Application() {
         super.onCreate()
         appContext = applicationContext
     }
+
     companion object {
         lateinit var appContext: Context
     }

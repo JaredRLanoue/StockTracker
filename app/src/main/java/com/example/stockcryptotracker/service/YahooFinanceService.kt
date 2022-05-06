@@ -1,6 +1,7 @@
 package com.example.stockcryptotracker.service
 
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import com.example.stockcryptotracker.dto.*
 import com.example.stockcryptotracker.network.RetrofitAPIFactory
@@ -11,7 +12,7 @@ import retrofit2.Response
 
 class YahooFinanceService {
 
-    val api = RetrofitAPIFactory().getYahooFinanceAPI()
+    private val api = RetrofitAPIFactory().getYahooFinanceAPI()
 
     fun getStockData(
         symbols: String,
@@ -155,7 +156,6 @@ class YahooFinanceService {
         })
     }
 
-
     fun getWatchlistData(): MutableList<String> {
         val prefs = StockApplication.appContext.getSharedPreferences("watchlist", Context.MODE_PRIVATE)
         val favoriteSet = prefs.getStringSet("watchlist", HashSet())!!.toMutableList()
@@ -182,7 +182,10 @@ class YahooFinanceService {
             putStringSet("watchlist", favoriteSet.toMutableSet())
             commit()
         }
+    }
 
+    fun getIntent(intent: Intent): String {
+        return intent.getStringExtra("id")!!
     }
 }
 

@@ -1,5 +1,6 @@
 package com.example.stockcryptotracker.view.home
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -25,20 +26,23 @@ class MarketSummaryAdapter(private val data: MarketData) :
         )
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         val stock = data.marketSummaryResponse.result[position]
 
-        if (stock.shortName != null) { // BTC doesn't have shortName, so it's name will be the symbol instead - not sure how to remove highlighted warning? It's needed or else textview is blank
+        // BTC doesn't have shortName, so it's name will be the symbol instead - not sure how to remove highlighted warning? It's needed or else the textview is blank
+        if (stock.shortName != null) {
             holder.tvName.text = stock.shortName
         } else {
             holder.tvName.text = stock.symbol
         }
 
-        if (stock.regularMarketPrice.raw < 0.01) { // Alt-coins on the weekends are lower than 0.01, need to show their real prices
+        // Alt-coins prices are sometimes lower than 0.01, decided to show their unformatted prices instead
+        if (stock.regularMarketPrice.raw < 0.01) {
             holder.tvPrice.text = stock.regularMarketPrice.raw.toString()
         } else {
-            holder.tvPrice.text = String.format("%.2f", stock.regularMarketPrice.raw)
+            holder.tvPrice.text = String.format("%,.2f", stock.regularMarketPrice.raw)
         }
 
         val roundedPercentChange =

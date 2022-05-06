@@ -22,11 +22,11 @@
             <TextView
                 android:id="@+id/stock_name"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/activity_margin"
-                android:maxLines="2"
+                android:layout_marginEnd="@dimen/activity_margin"
                 android:textColor="@color/textWhite"
-                android:textSize="25sp" />
+                android:textSize="@dimen/large_title" />
 
             <!--                <View-->
             <!--                    android:layout_width="1dp"-->
@@ -59,7 +59,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/textWhite"
-                    android:textSize="25sp" />
+                    android:textSize="@dimen/large_title" />
 
                 <TextView
                     android:id="@+id/stock_percent_change"
@@ -67,7 +67,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="10dp"
                     android:textColor="@color/priceGreen"
-                    android:textSize="17sp" />
+                    android:textSize="@dimen/medium_title" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -113,12 +113,12 @@
                 android:layout_marginTop="@dimen/card_margin"
                 android:layout_marginRight="@dimen/activity_margin"
                 android:backgroundTint="@color/cardColor"
-                app:cardCornerRadius="15dp">
+                app:cardCornerRadius="@dimen/corner_radius">
 
                 <LinearLayout
                     android:id="@+id/stats"
                     android:layout_width="match_parent"
-                    android:layout_height="175dp"
+                    android:layout_height="@dimen/stats_height"
                     android:orientation="horizontal"
                     android:weightSum="2">
 
@@ -136,7 +136,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/activity_margin"
                             android:textColor="@color/textWhite"
-                            android:textSize="15sp" />
+                            android:textSize="@dimen/stats_size" />
 
                         <TextView
                             android:id="@+id/close"
@@ -144,7 +144,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/activity_margin"
                             android:textColor="@color/textWhite"
-                            android:textSize="15sp" />
+                            android:textSize="@dimen/stats_size" />
 
                         <TextView
                             android:id="@+id/volume"
@@ -152,7 +152,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/activity_margin"
                             android:textColor="@color/textWhite"
-                            android:textSize="15sp" />
+                            android:textSize="@dimen/stats_size" />
 
                     </LinearLayout>
 
@@ -166,7 +166,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:gravity="center|start"
+                        android:gravity="center|end"
                         android:orientation="vertical">
 
                         <TextView
@@ -175,7 +175,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/activity_margin"
                             android:textColor="@color/textWhite"
-                            android:textSize="15sp" />
+                            android:textSize="@dimen/stats_size" />
 
                         <TextView
                             android:id="@+id/fiftyHigh"
@@ -183,7 +183,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/activity_margin"
                             android:textColor="@color/textWhite"
-                            android:textSize="15sp" />
+                            android:textSize="@dimen/stats_size" />
 
                         <TextView
                             android:id="@+id/fiftyLow"
@@ -191,7 +191,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/activity_margin"
                             android:textColor="@color/textWhite"
-                            android:textSize="15sp" />
+                            android:textSize="@dimen/stats_size" />
                     </LinearLayout>
 
 

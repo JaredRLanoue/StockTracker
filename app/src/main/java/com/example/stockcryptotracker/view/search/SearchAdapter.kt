@@ -30,6 +30,7 @@ class SearchAdapter(private val data: SearchData) :
 
         holder.tvName.text = stock.name
         holder.tvSymbol.text = stock.symbol
+
         holder.card.setOnClickListener {
             val context = holder.card.context
             val intent = Intent(context, DetailsActivity::class.java)

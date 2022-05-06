@@ -1,32 +1,18 @@
 package com.example.stockcryptotracker.view.details
 
-import android.app.Application
-import android.content.Context
-import android.content.SharedPreferences
+import android.content.Intent
 import com.example.stockcryptotracker.service.YahooFinanceService
-import com.example.stockcryptotracker.view.home.StockApplication
-import com.example.stockcryptotracker.view.home.StockApplication.Companion.appContext
-import com.github.mikephil.charting.data.ChartData
 import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineDataSet
+import com.example.stockcryptotracker.dto.ChartData
 
 
-class DetailsPresenter(val view: DetailsView) {
-    val yahooService = YahooFinanceService()
+class DetailsPresenter(val view: DetailsView, val yahooService: YahooFinanceService) {
 
     fun start(id: String) {
         getStockData(id)
         getChartData(id)
         getStatsData(id)
-    }
-
-    // remove once working
-    fun getSharedPref(): SharedPreferences? {
-        return appContext.getSharedPreferences("watchlist", Context.MODE_PRIVATE)
-    }
-
-    fun getSharedPrefFavoritesSet(): MutableList<String> {
-        val favoriteSet: Set<String> = appContext.getSharedPreferences("watchlist", Context.MODE_PRIVATE).getStringSet("watchlist", HashSet()) as Set<String>
-        return favoriteSet.toMutableList()
     }
 
     fun getStockData(id: String) {
@@ -46,7 +32,7 @@ class DetailsPresenter(val view: DetailsView) {
         yahooService.getChartData(
             id,
             successCallback = { data ->
-                view.bindChartData(data)
+                view.bindChartData(collectChartData(data))
             },
 
             failureCallback = { errorMessage ->
@@ -68,5 +54,19 @@ class DetailsPresenter(val view: DetailsView) {
         )
     }
 
+    fun collectChartData(data: ChartData): LineDataSet {
+        val price = data.chart.result[0].indicators.quote[0].close
+        val timestamp = data.chart.result[0].timestamp
+        val entries: ArrayList<Entry> = ArrayList()
+
+        for (index in timestamp.indices) {
+            if (timestamp[index].toString() !== "null" && price[index].toString() !== "null") {
+                    entries.add(Entry(timestamp[index]!!.toFloat(), price[index]!!))
+            }
+        }
+
+        val lineDataSet = LineDataSet(entries, "")
+        return lineDataSet
+    }
 }
 

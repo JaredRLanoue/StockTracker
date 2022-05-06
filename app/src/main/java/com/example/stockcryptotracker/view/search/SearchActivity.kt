@@ -29,18 +29,20 @@ class SearchActivity : AppCompatActivity(), SearchView {
         setContentView(R.layout.activity_search)
 
         bindViews()
+        setUpNav()
 
-        // Not sure if this is right in terms of mvp?
         searchButton.setOnClickListener {
             val parameter = searchBar.text.toString()
             if(parameter.isNotEmpty()) {
                 presenter.start(parameter)
             }
         }
-
         title = "Search"
+    }
 
-        // Bottom navigation bar, need to move still
+    fun setUpNav(){
+        overridePendingTransition(androidx.transition.R.anim.abc_fade_in, androidx.transition.R.anim.abc_fade_out)
+
         val bottomNavigation: BottomNavigationView = findViewById(R.id.bottom_navigation)
         bottomNavigation.selectedItemId = R.id.ic_search
         bottomNavigation.setOnItemSelectedListener {
@@ -52,7 +54,6 @@ class SearchActivity : AppCompatActivity(), SearchView {
             true
         }
     }
-
 
     override fun showError(errorMessage: String) {
         Snackbar.make(searchContainer, errorMessage, Snackbar.LENGTH_LONG).show()

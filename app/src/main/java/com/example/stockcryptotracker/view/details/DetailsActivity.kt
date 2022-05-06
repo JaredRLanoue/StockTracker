@@ -1,41 +1,32 @@
 package com.example.stockcryptotracker.view.details
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.ToggleButton
 import androidx.appcompat.app.AppCompatActivity
-import androidx.cardview.widget.CardView
 import com.example.stockcryptotracker.R
-import com.example.stockcryptotracker.dto.ChartData
 import com.example.stockcryptotracker.dto.FinanceData
 import com.example.stockcryptotracker.dto.StatsData
+import com.example.stockcryptotracker.service.YahooFinanceService
 import com.example.stockcryptotracker.view.watchlist.WatchlistActivity
 import com.example.stockcryptotracker.view.home.HomeActivity
-import com.example.stockcryptotracker.view.home.StockApplication
 import com.example.stockcryptotracker.view.search.SearchActivity
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
-import org.w3c.dom.Text
-import java.text.NumberFormat
-import kotlin.collections.ArrayList
 
 
 class DetailsActivity : AppCompatActivity(), DetailsView {
 
-    val presenter = DetailsPresenter(this)
+    // I feel like there may be a better way of dealing with all of these, but I'm leaving this as is for now
+    val presenter = DetailsPresenter(this, yahooService = YahooFinanceService())
     lateinit var detailsContainer: View
     lateinit var stockName: TextView
     lateinit var stockPrice: TextView
@@ -48,21 +39,20 @@ class DetailsActivity : AppCompatActivity(), DetailsView {
     lateinit var marketCap: TextView
     lateinit var fiftyTwoWeekLow: TextView
     lateinit var fiftyTwoWeekHigh: TextView
-
+    private val yahooService = YahooFinanceService()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_details)
 
         bindViews()
+        setUpNav()
 
-        // Not finished, don't put here - change to service
-        val symbolID = intent.getStringExtra("id")!!
-
-        // These two shouldn't call presenter, instead call service
-        val favoriteSet = presenter.getSharedPrefFavoritesSet()
+        val symbolID = yahooService.getIntent(intent)
 
         presenter.start(symbolID)
+
+        val favoriteSet = yahooService.getWatchlistData()
 
         if (symbolID in favoriteSet) {
             favoritesButton.isChecked = true
@@ -70,30 +60,19 @@ class DetailsActivity : AppCompatActivity(), DetailsView {
 
         favoritesButton.setOnClickListener {
             if (favoritesButton.isChecked) {
-                favoriteSet.add(symbolID)
-                with(
-                    StockApplication.appContext.getSharedPreferences("watchlist", Context.MODE_PRIVATE
-                    ).edit()
-                ) {
-                    putStringSet("watchlist", favoriteSet.toMutableSet())
-                    commit()
-                }
+                yahooService.addToWatchlist(symbolID)
             }
             if (!favoritesButton.isChecked) {
-                favoriteSet.remove(symbolID)
-                with(
-                    StockApplication.appContext.getSharedPreferences("watchlist", Context.MODE_PRIVATE
-                    ).edit()
-                ) {
-                    putStringSet("watchlist", favoriteSet.toMutableSet())
-                    commit()
-                }
+                yahooService.removeFromWatchlist(symbolID)
             }
         }
 
         title = "Details"
+    }
 
-        // Bottom navigation bar, need to move still
+    fun setUpNav(){
+        overridePendingTransition(androidx.transition.R.anim.abc_fade_in, androidx.transition.R.anim.abc_fade_out)
+
         val bottomNavigation: BottomNavigationView = findViewById(R.id.bottom_navigation)
         bottomNavigation.selectedItemId = R.id.ic_home
         bottomNavigation.setOnItemSelectedListener {
@@ -108,24 +87,12 @@ class DetailsActivity : AppCompatActivity(), DetailsView {
 
     override fun showError(errorMessage: String) {
         Snackbar.make(detailsContainer, errorMessage, Snackbar.LENGTH_LONG).show()
+
     }
 
-    override fun bindChartData(data: ChartData) {
-        val price = data.chart.result[0].indicators.quote[0].close
-        val timestamp = data.chart.result[0].timestamp
-        val entries: ArrayList<Entry> = ArrayList()
+    override fun bindChartData(data: LineDataSet) {
 
-        for (index in timestamp.indices) {
-            if (timestamp[index].toString() !== "null") {
-                if (price[index].toString() !== "null") {
-                    entries.add(Entry(timestamp[index]!!.toFloat(), price[index]!!))
-                }
-            }
-        }
-
-        val lineDataSet = LineDataSet(entries, "")
-
-        lineDataSet.apply {
+        data.apply {
             color = Color.parseColor("#00d964")
             setDrawCircles(false)
             setDrawHighlightIndicators(true)
@@ -134,7 +101,7 @@ class DetailsActivity : AppCompatActivity(), DetailsView {
             lineWidth = 1.25f
         }
 
-        lineChart.data = LineData(lineDataSet)
+        lineChart.data = LineData(data)
 
         lineChart.apply {
             setDrawGridBackground(false)
@@ -145,10 +112,10 @@ class DetailsActivity : AppCompatActivity(), DetailsView {
             setExtraOffsets(15f, 15F, 30f, 15F)
         }
 
-//         From what I found online using MPAndroidCharts, you can't set X/Y Axis titles. You can use a textview but
-//         decided to just format the numbers so they are easier to understand using the two formatter classes I made.
-//         These formatters are needed because you must pass a float into the entries, then you can format those values
-//         later on using the valueFormatter.
+         /* From what I found online using MPAndroidCharts, you can't set X/Y Axis titles. You can use a textview but
+         decided to just format the numbers so they are easier to understand using the two formatter classes I made.
+         These formatters are needed because you must pass a float into the entries, then you can format those values
+         later on using the valueFormatter. */
 
         lineChart.axisLeft.apply {
             isEnabled = true
@@ -161,14 +128,15 @@ class DetailsActivity : AppCompatActivity(), DetailsView {
 
         lineChart.xAxis.apply {
             isEnabled = true
+            textColor = Color.parseColor("#ffffff")
             textSize = 15f
             axisLineWidth = 1f
-            position = XAxis.XAxisPosition.BOTTOM
-            textColor = Color.parseColor("#ffffff")
             setDrawGridLines(false)
             valueFormatter = DateFormatter()
             setLabelCount(6, true)
+            position = XAxis.XAxisPosition.BOTTOM
         }
+
         lineChart.invalidate()
 
     }
@@ -180,7 +148,8 @@ class DetailsActivity : AppCompatActivity(), DetailsView {
         stockName.text = stock.shortName
 
         if (stock.regularMarketPrice >= 0.01) {
-            stockPrice.text = String.format("%.2f", stock.regularMarketPrice)
+            stockPrice.text = String.format("$%,.2f", stock.regularMarketPrice)
+
         } else {
             stockPrice.text = String.format("%.6f", stock.regularMarketPrice.toBigDecimal())
         }
@@ -199,12 +168,14 @@ class DetailsActivity : AppCompatActivity(), DetailsView {
 
     @SuppressLint("SetTextI18n")
     override fun bindStatsData(data: StatsData) {
-        marketCap.text = "Mkt Cap: ${data.quoteSummary.result[0].summaryDetail.marketCap?.fmt}"
-        marketOpen.text = "Open: ${data.quoteSummary.result[0].summaryDetail.regularMarketOpen?.fmt}"
-        marketClose.text = "Close: ${data.quoteSummary.result[0].summaryDetail.regularMarketPreviousClose?.fmt}"
-        volume.text = "Volume: ${data.quoteSummary.result[0].summaryDetail.volume?.fmt}"
-        fiftyTwoWeekHigh.text = "52Wk Hi: ${data.quoteSummary.result[0].summaryDetail.fiftyTwoWeekHigh?.fmt}"
-        fiftyTwoWeekLow.text = "52Wk Lo: ${data.quoteSummary.result[0].summaryDetail.fiftyTwoWeekLow?.fmt}"
+        val stock = data.quoteSummary.result[0].summaryDetail
+
+        marketCap.text = "Mkt Cap: ${stock.marketCap?.fmt}"
+        marketOpen.text = "Open: ${stock.regularMarketOpen?.fmt}"
+        marketClose.text = "Close: ${stock.regularMarketPreviousClose?.fmt}"
+        volume.text = "Volume: ${stock.volume?.fmt}"
+        fiftyTwoWeekHigh.text = "52Wk Hi: ${stock.fiftyTwoWeekHigh?.fmt}"
+        fiftyTwoWeekLow.text = "52Wk Lo: ${stock.fiftyTwoWeekLow?.fmt}"
 
     }
 
