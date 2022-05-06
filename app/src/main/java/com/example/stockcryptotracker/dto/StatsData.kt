@@ -21,25 +21,25 @@ data class StatsData3(
 )
 
 data class StatsData4(
-    val fmt: String?
+    val fmt: String? = "N/A"
 )
 
 data class StatsData5(
-    val fmt: String?
+    val fmt: String? = "N/A"
 )
 
 data class StatsData6(
-    val fmt: String?
+    val fmt: String? = "N/A"
 )
 
 data class StatsData7(
-    val fmt: String?
+    val fmt: String? = "N/A"
 )
 
 data class StatsData8(
-    val fmt: String?
+    val fmt: String? = "N/A"
 )
 
 data class StatsData9(
-    val fmt: String?
+    val fmt: String? = "N/A"
 )
